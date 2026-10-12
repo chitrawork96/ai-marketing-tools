@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chitrangada — AI Product Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #e8b86d;
+    --gold-soft: #f6dcae;
+    --ink: #0c0b0a;
+    --panel: rgba(255,255,255,0.045);
+    --panel-border: rgba(255,255,255,0.09);
+    --text-dim: #a8a29a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    color: #f3f0ea;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(110px);
+    z-index: 0;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .glow-1 { width: 520px; height: 520px; background: radial-gradient(circle, #e8b86d, transparent 70%); top: -180px; left: -120px; animation: drift1 22s ease-in-out infinite; }
+  .glow-2 { width: 460px; height: 460px; background: radial-gradient(circle, #8b6bd9, transparent 70%); bottom: -160px; right: -100px; opacity: 0.35; animation: drift2 26s ease-in-out infinite; }
+  .glow-3 { width: 360px; height: 360px; background: radial-gradient(circle, #d9764f, transparent 70%); top: 45%; left: 50%; opacity: 0.22; animation: drift3 30s ease-in-out infinite; }
+  @keyframes drift1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(60px, 40px); } }
+  @keyframes drift2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-50px, -30px); } }
+  @keyframes drift3 { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.15); } }
+
+  .noise {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 90px 32px 60px; }
+
+  header { margin-bottom: 70px; }
+  .kicker {
+    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 18px;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.1s;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 74px);
+    line-height: 1.02;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    color: var(--gold-soft);
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.25s;
+  }
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    h1 {
+      background: linear-gradient(120deg, #fff 30%, var(--gold-soft) 70%, var(--gold) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+  }
+  .role {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.4vw, 24px);
+    color: var(--text-dim); font-weight: 500; margin-top: 10px;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+  .intro {
+    max-width: 620px; margin-top: 26px; font-size: 15.5px; line-height: 1.75;
+    color: #cfc9c0;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.55s;
+  }
+  .contact-row {
+    margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.7s;
+  }
+  .pill {
+    font-size: 12.5px; padding: 8px 16px; border-radius: 999px;
+    border: 1px solid var(--panel-border); color: #e8e3da; text-decoration: none;
+    background: var(--panel); transition: all 0.25s ease;
+  }
+  .pill:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .skills {
+    border: 1px solid var(--panel-border);
+    background: linear-gradient(135deg, rgba(232,184,109,0.08), rgba(255,255,255,0.02));
+    border-radius: 18px; padding: 26px 30px; margin-bottom: 64px;
+    backdrop-filter: blur(6px);
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.85s;
+  }
+  .section-label {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; margin-bottom: 14px;
+  }
+  .skills-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .skills-tags span {
+    font-size: 12.5px; padding: 7px 14px; border-radius: 8px;
+    background: rgba(255,255,255,0.05); color: #ece7de; border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .section-heading {
+    font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 600;
+    margin-bottom: 6px; letter-spacing: -0.5px;
+  }
+  .section-sub { color: var(--text-dim); font-size: 13.5px; margin-bottom: 32px; }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px; margin-bottom: 60px;
+  }
+  .card {
+    position: relative;
+    border: 1px solid var(--panel-border);
+    background: var(--panel);
+    border-radius: 16px; padding: 24px 24px 22px;
+    transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease,
+                opacity 0.6s ease, filter 0.6s ease;
+    overflow: hidden;
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(22px);
+  }
+  .card.reveal {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+    transition: transform 0.6s cubic-bezier(0.2,0.7,0.3,1), border-color 0.35s ease,
+                background 0.35s ease, opacity 0.6s ease, filter 0.6s ease;
+  }
+  .card.reveal:hover { transform: translateY(-6px); }
+  .card::before {
+    content: ""; position: absolute; inset: 0; border-radius: 16px;
+    background: linear-gradient(140deg, rgba(232,184,109,0.14), transparent 55%);
+    opacity: 0; transition: opacity 0.35s ease;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(232,184,109,0.45);
+    background: rgba(255,255,255,0.06);
+  }
+  .card:hover::before { opacity: 1; }
+  .card .tag {
+    display: inline-block; font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--ink); background: var(--gold-soft); padding: 4px 10px; border-radius: 6px;
+    margin-bottom: 12px; font-weight: 700; position: relative; z-index: 1;
+  }
+  .card h3 {
+    font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600;
+    margin-bottom: 8px; position: relative; z-index: 1;
+  }
+  .card p {
+    font-size: 12.8px; line-height: 1.6; color: #b8b2a8; margin-bottom: 16px;
+    position: relative; z-index: 1;
+  }
+  .card a.visit {
+    font-size: 12px; font-weight: 600; color: var(--gold); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px; position: relative; z-index: 1;
+    border-bottom: 1px solid transparent; transition: border-color 0.2s ease;
+  }
+  .card a.visit:hover { border-color: var(--gold); }
+  .card a.visit::after { content: "↗"; font-size: 13px; transition: transform 0.25s ease; }
+  .card a.visit:hover::after { transform: translate(2px, -2px); }
+
+  footer {
+    margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--panel-border);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    font-size: 11.5px; color: #6f6a62;
+  }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 60px 20px 40px; }
+    footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+<div class="glow glow-3"></div>
+<div class="noise"></div>
+
+<div class="wrap">
+
+  <header>
+    <div class="kicker">Portfolio — 2026</div>
+    <h1>Chitrangada</h1>
+    <div class="role">AI Marketing Solution Builder — Growth and Marketing Tools</div>
+    <p class="intro">
+      I design and ship AI-powered tools that solve real marketing and growth problems — from keyword
+      research to AI-search visibility. Each project below was built end-to-end: concept, UX, and a live,
+      working product.
+    </p>
+    <div class="contact-row">
+      <a class="pill" href="mailto:chitra.work96@gmail.com">chitra.work96@gmail.com</a>
+      <a class="pill" href="https://www.linkedin.com/in/chitrangada-mishra-23782384/" target="_blank">LinkedIn</a>
+      <a class="pill" href="https://chitramarketingportfolio.netlify.app/" target="_blank">Full Portfolio ↗</a>
+      <span class="pill" style="cursor:default;">25 live products</span>
+    </div>
+  </header>
+
+  <div class="skills">
+    <div class="section-label">Core Skills</div>
+    <div class="skills-tags">
+      <span>Rapid AI app prototyping</span>
+      <span>Lovable</span>
+      <span>Base44</span>
+      <span>Bolt</span>
+      <span>AI Studio</span>
+      <span>Product thinking for growth</span>
+      <span>AI / LLM-powered tooling</span>
+      <span>AEO &amp; AI-search visibility</span>
+      <span>Content &amp; keyword strategy</span>
+      <span>Fast, independent shipping</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-heading">AI Marketing Solution Prototypes</div>
+    <div class="section-sub">Twenty-five AI tools, shipped and live — click any card to try it.</div>
+
+    <div class="grid">
+
+      <div class="card">
+        <span class="tag">Learning / Dashboard</span>
+        <h3>AI Learning Dashboard</h3>
+        <p>Tracks and organizes a user's AI learning journey — surfacing progress, resources, and next steps in one clean view.</p>
+        <a class="visit" href="https://ailearningdashboard.lovable.app" target="_blank">ailearningdashboard.lovable.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">SEO / Content</span>
+        <h3>AI Keyword Idea Generator</h3>
+        <p>Generates keyword and content ideas using AI, helping marketers quickly find angles worth writing about.</p>
+        <a class="visit" href="https://aikeywordideagenerator.lovable.app" target="_blank">aikeywordideagenerator.lovable.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Growth Tool</span>
+        <h3>Growth Math Quick</h3>
+        <p>A fast calculator for core growth and marketing math — turning metrics like CAC, LTV, and conversion into usable answers.</p>
+        <a class="visit" href="https://growth-math-quick.lovable.app" target="_blank">growth-math-quick.lovable.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">AI Search / AEO</span>
+        <h3>AI Answer Visibility Snapshot</h3>
+        <p>Checks how visible a brand or page is inside AI-generated answers (ChatGPT, Perplexity, AI Overviews).</p>
+        <a class="visit" href="https://ai-answer-visibility-snapshot-714495082226.us-west1.run.app" target="_blank">ai-answer-visibility-snapshot.run.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">AI Analysis</span>
+        <h3>AI vs Human Judgment Flag</h3>
+        <p>Flags and compares outputs where AI judgment and human judgment diverge, spotting content worth a second look.</p>
+        <a class="visit" href="https://ai-vs-human-judgment-flag-714495082226.us-west1.run.app" target="_blank">ai-vs-human-judgment-flag.run.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Content / Ads</span>
+        <h3>AI Hook Generator</h3>
+        <p>Generates scroll-stopping hooks for ads, social posts, and video scripts — a fast starting point for creative.</p>
+        <a class="visit" href="https://aihookgenerator.base44.app" target="_blank">aihookgenerator.base44.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Content Strategy</span>
+        <h3>Zero-Click Content Strategy</h3>
+        <p>Helps marketers plan content built for a zero-click search world — where answers are consumed on the results page or inside AI chat.</p>
+        <a class="visit" href="https://zero-click-content-s-858j.bolt.host" target="_blank">zero-click-content-s-858j.bolt.host</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Brand Strategy</span>
+        <h3>Brand Nostalgia Angle Finder</h3>
+        <p>Surfaces nostalgia-driven marketing angles for a brand, helping teams tap into emotional, memory-based positioning.</p>
+        <a class="visit" href="https://brandnostalgiaanglefinder.base44.app" target="_blank">brandnostalgiaanglefinder.base44.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">AI Search / AEO</span>
+        <h3>Prompt Fan-Out Map</h3>
+        <p>Maps how a single topic fans out into the many related prompts users ask AI assistants — useful for planning AI-search content coverage.</p>
+        <a class="visit" href="https://promptfanoutmap.bolt.host" target="_blank">promptfanoutmap.bolt.host</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Funnel / CRO</span>
+        <h3>Funnel Fixer AI</h3>
+        <p>Analyzes a marketing funnel and flags where it's leaking users, giving AI-driven suggestions to fix drop-off points and lift conversion.</p>
+        <a class="visit" href="https://funnelfixerai.lovable.app" target="_blank">funnelfixerai.lovable.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Analytics / Tracking</span>
+        <h3>Pocket UTM Builder</h3>
+        <p>A quick, no-friction tool for building clean, consistent UTM tracking links on the go — built for marketers who track everything.</p>
+        <a class="visit" href="https://pcoketutmbuilder.lovable.app" target="_blank">pcoketutmbuilder.lovable.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Strategy / Targeting</span>
+        <h3>ICP Generator</h3>
+        <p>Generates a clear Ideal Customer Profile from a product or business description, helping teams pin down who to actually target.</p>
+        <a class="visit" href="https://icpgnerator-7634.ai.studio" target="_blank">icpgnerator-7634.ai.studio</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Email / Copy</span>
+        <h3>Email Subject Line Scorer</h3>
+        <p>Scores email subject lines for open-rate potential, flagging weak spots and suggesting sharper alternatives before you hit send.</p>
+        <a class="visit" href="https://email-subject-score.bolt.host" target="_blank">email-subject-score.bolt.host</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Growth / Metrics</span>
+        <h3>KPI Health Checker</h3>
+        <p>Reviews a team's key growth and marketing metrics and flags which ones are healthy, at risk, or need immediate attention.</p>
+        <a class="visit" href="https://kpihealthchecker.base44.app" target="_blank">kpihealthchecker.base44.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">AI Search / AEO</span>
+        <h3>AI Crawler Readiness Checker</h3>
+        <p>Checks whether a site is actually accessible and readable to AI crawlers (GPTBot, ClaudeBot, etc.), flagging blockers to AI-search visibility.</p>
+        <a class="visit" href="https://aicrwalerreadinesschecker.bolt.host" target="_blank">aicrwalerreadinesschecker.bolt.host</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Experimentation</span>
+        <h3>A/B Test Planner SaaS Dashboard</h3>
+        <p>A dashboard for planning A/B tests — sample size, duration, and hypothesis tracking in one place for growth teams running experiments.</p>
+        <a class="visit" href="https://a-btestplannersaasdashboard.bolt.host" target="_blank">a-btestplannersaasdashboard.bolt.host</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">SEO / Content</span>
+        <h3>AI SEO Cluster Builder</h3>
+        <p>Builds topic clusters from a seed keyword, mapping pillar and supporting content so SEO strategy is organized before a single article is written.</p>
+        <a class="visit" href="https://aiseoclusterbuilder.ai.studio" target="_blank">aiseoclusterbuilder.ai.studio</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Content / Ads</span>
+        <h3>CTA Generator</h3>
+        <p>Generates sharp, high-converting calls to action for landing pages, emails, and ads — tuned to the goal and tone you give it.</p>
+        <a class="visit" href="https://ctagenerator.lovable.app" target="_blank">ctagenerator.lovable.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Growth / Metrics</span>
+        <h3>AI Marketing Budget Planner</h3>
+        <p>Helps allocate a marketing budget across channels using AI-driven recommendations based on goals and spend history.</p>
+        <a class="visit" href="https://ai-marketing-budget.bolt.host" target="_blank">ai-marketing-budget.bolt.host</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Strategy / Targeting</span>
+        <h3>Positioning AI</h3>
+        <p>Helps a brand or founder define sharp market positioning — what makes them different, and how to say it clearly.</p>
+        <a class="visit" href="https://positioningai.lovable.app" target="_blank">positioningai.lovable.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Finance / Personal</span>
+        <h3>Income Calculator</h3>
+        <p>Runs 21 different income and budgeting calculations in one place — from take-home pay to savings and rate planning — each paired with a financial-tip benchmark.</p>
+        <a class="visit" href="https://income-calculator.bolt.host" target="_blank">income-calculator.bolt.host</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">AI Research</span>
+        <h3>Atlas AI — AI Research Assistant</h3>
+        <p>An AI research assistant that gathers, synthesizes, and organizes information on a topic — turning scattered research into clear, structured findings fast.</p>
+        <a class="visit" href="https://atlasaiclarity.lovable.app" target="_blank">atlasaiclarity.lovable.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Funnel / CRO</span>
+        <h3>CRM Automation Audit</h3>
+        <p>Audits a CRM and lifecycle setup from twelve inputs, scoring health across eight categories and returning a prioritized automation roadmap — lead scoring model, gap analysis, and lifecycle diagnostic included.</p>
+        <a class="visit" href="https://crmautomationaudit.base44.app" target="_blank">crmautomationaudit.base44.app</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Paid Media / Budget</span>
+        <h3>SpendShift</h3>
+        <p>Models diminishing returns for each ad channel, finds the marginal cost of the next conversion, and recommends how to shift spend between channels for more conversions at the same total budget.</p>
+        <a class="visit" href="https://spendshift-budget.bolt.host" target="_blank">spendshift-budget.bolt.host</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Launch / GTM</span>
+        <h3>LaunchReady</h3>
+        <p>Scores launch readiness across positioning, messaging, channels, tracking, feedback, and timing, then turns every gap into a prioritized fix list before you go live.</p>
+        <a class="visit" href="https://launch-ready-scorecard--chitraaady.replit.app" target="_blank">launch-ready-scorecard--chitraaady.replit.app</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>Chitrangada · chitra.work96@gmail.com</span>
+    <span>
+      <a href="https://www.linkedin.com/in/chitrangada-mishra-23782384/" target="_blank" style="color:#a8a29a; text-decoration:none;">LinkedIn</a>
+      &nbsp;·&nbsp;
+      <a href="https://chitramarketingportfolio.netlify.app/" target="_blank" style="color:#a8a29a; text-decoration:none;">Full Portfolio</a>
+    </span>
+  </footer>
+
+</div>
+
+<script>
+  const cards = document.querySelectorAll('.card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const i = Array.from(cards).indexOf(entry.target);
+        entry.target.style.transitionDelay = (i % 6) * 0.08 + 's';
+        entry.target.classList.add('reveal');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  cards.forEach((card) => observer.observe(card));
+</script>
+</body>
+</html>
